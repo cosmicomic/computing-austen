@@ -6,7 +6,7 @@ A CS 81 project that applies techniques in natural language generation and senti
 
 1. Generate sentences or passages in the style of Jane Austen by training a generative model or models on the corpus.
 
-   The pipe dream would be to be able to generate Austen-like courtship plots (narrative generation) and then generate Austenian prose to realize those plots -- in effect, computationally "writing an Austen novel". This is probably far beyond the scope of this project and my own time and abilities, but it is perhaps inspiring to keep in mind.
+   The pipe dream would be to be able to generate Austen-like courtship plots (narrative generation) and then generate Austenian prose to realize those plots -- in effect, computationally "writing an Austen novel" (or at least short story). This is probably far beyond the scope of this project and my own time and abilities, but it is perhaps inspiring to keep in mind.
 
 2. Train a classifier that can identify irony in Austen's writing.
 
