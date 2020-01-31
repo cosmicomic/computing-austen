@@ -22,22 +22,32 @@ This section is heavily under development as I do more research on related work 
 
 - Program a simple *n*-gram Markov model (try varying *n*) to produce statistically probable sentences based on the Jane Austen corpus.
   - Texts of the novel are happily available on Project Gutenberg.
+    - [Northanger Abbey](http://www.gutenberg.org/files/121/121-0.txt)
+    - [Sense and Sensibility](http://www.gutenberg.org/cache/epub/161/pg161.txt)
+    - [Pride and Prejudice](http://www.gutenberg.org/files/1342/1342-0.txt)
+    - [Mansfield Park](http://www.gutenberg.org/files/141/141-0.txt)
+    - [Emma](http://www.gutenberg.org/files/158/158-0.txt)
+    - [Persuasion](http://www.gutenberg.org/cache/epub/105/pg105.txt)
 - Do more research to get a better sense of future objectives.
   - Read a few articles in the digital humanities.
   - Still have not found work that specifically seeks to emulate the prose writing of a particular author, though I have found a plethora of work on style-constrained poetry generation.
-  - Kevin Gilmartin has offered to put me in touch with Ted Underwood, a digital humanist. I should take him up on this.
+- Possibly get in touch with experts. If so, prepare questions, etc.
+  - Kevin Gilmartin has offered to put me in touch with Ted Underwood, a digital humanist. I might want to take him up on this.
+  - Instructor for Caltech's one-time computational literature class.
 
 ## Potential future objectives
 
-- Once I have a naive Markov generator working, try to constrain the generated sentences to be grammatically correct.
+- Once I have a naive Markov generator working, try to put constraints on the generated sentences to force them to be grammatically correct.
+  - Try other models that may arrive at grammatical correctness or other desirable features through other means.
 - As a step towards irony detection, use pre-existing methods to evaluate the valence (positivity/negativity) of passages in Jane Austen.
 
 ## Related Work
 
 ### Digital Humanities
-- Project ["Austen Said"](http://austen.unl.edu/), which uses computational methods to explore patterns in Austen's diction.
 - An [overview](http://www.digitalhumanities.org/dhq/vol/11/2/000317/000317.html) of "distant reading".
-- ["Literary Pattern Recognition"](https://lucian.uchicago.edu/blogs/literarynetworks/files/2015/12/LONG_SO_CI.pdf), a paper that uses ML methods to find statistical patterns in the English haiku.
+- ["Literary Pattern Recognition"](https://lucian.uchicago.edu/blogs/literarynetworks/files/2015/12/LONG_SO_CI.pdf), a paper that uses ML methods to find statistical patterns in the English haiku (start at pg. 17).
+- Project ["Austen Said"](http://austen.unl.edu/), which uses computational methods to explore patterns in Austen's diction.
+  - This [paper](http://jasna.org/publications/persuasions-online/vol37no1/white-smith/) describes some of the difficulties in tagging textual features that have a subjective component. In their case it is free indirect discourse; in mine, it is irony. 
 
 ### Natural Language Generation
 - An apparently seminal [paper](https://www.aclweb.org/anthology/W98-1426.pdf) on using *n*-grams for text generation.
