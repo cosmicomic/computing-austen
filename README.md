@@ -35,7 +35,9 @@ This section is heavily under development as I do more research on related work 
 ## Related Work
 
 ### Digital Humanities
--Project ["Austen Said"](http://austen.unl.edu/), which uses computational methods to explore patterns in Austen's diction.
+- Project ["Austen Said"](http://austen.unl.edu/), which uses computational methods to explore patterns in Austen's diction.
+- An [overview](http://www.digitalhumanities.org/dhq/vol/11/2/000317/000317.html) of "distant reading".
+- ["Literary Pattern Recognition"] (Long and So 2016), a paper that uses ML methods to find statistical patterns in the English haiku.
 
 ### Natural Language Generation
 - An apparently seminal [paper](https://www.aclweb.org/anthology/W98-1426.pdf) on using *n*-grams for text generation.
