@@ -23,8 +23,9 @@ This section is heavily under development as I do more research on related work 
 - Program a simple *n*-gram Markov model (try varying *n*) to produce statistically probable sentences based on the Jane Austen corpus.
   - Texts of the novel are happily available on Project Gutenberg.
 - Do more research to get a better sense of future objectives.
+  - Specifically need to do more research on the digital humanities and what sorts of things are studied and how.
   - Still have not found work that specifically seeks to emulate the prose writing of a particular author, though I have found a plethora of work on style-constrained poetry generation.
-  - Get in touch with Ted Underwood, a digital humanist, through Professor Kevin Gilmartin, and ask him questions.
+  - Kevin Gilmartin has offered to put me in touch with Ted Underwood, a digital humanist. I should take him up on this.
 
 ## Potential future objectives
 
@@ -33,5 +34,11 @@ This section is heavily under development as I do more research on related work 
 
 ## Related Work
 
+TODO: organize this section into subsections, as I have in Zotero.
+
 - Project ["Austen Said"](http://austen.unl.edu/), which uses computational methods to explore patterns in Austen's diction.
 - [*SentiArt*](https://www.frontiersin.org/articles/10.3389/frobt.2019.00053/full) is an ML tool that infer the overall emotion ("joyful", "fearful", or "neutral" in the paper) of passages from Harry Potter novels.
+- Callaway and Lester, "[Narrative Prose Generation](http://www.sciencedirect.com/science/article/pii/S0004370202002308)" seems to present a process for generating a narrative and the sentences to express it.
+- [Song lyrics in the style of Bob Dylan are generated using a Constrained Markov Model, which allows for the control of rhyme and meter](https://www.researchgate.net/publication/236166532_Markov_Constraints_for_Generating_Lyrics_with_Style). 
+  - The [PhD thesis](https://pdfs.semanticscholar.org/b71c/7f8888f4dc205daf81ff70d939ac6db86bb8.pdf) of the main author on this paper. Seems to contain potentially useful background information and information on the work itself.
+- *The structure of style: algorithmic approaches to understanding manner and meaning* is an entire book on the computational study of style in multiple artistic mediums.
