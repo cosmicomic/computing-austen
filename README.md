@@ -43,6 +43,8 @@ This section is heavily under development as I do more research on related work 
 
 ## Related Work
 
+[Zotero](https://www.zotero.org/cosmicomic/items/)
+
 ### Digital Humanities
 - An [overview](http://www.digitalhumanities.org/dhq/vol/11/2/000317/000317.html) of "distant reading".
 - ["Literary Pattern Recognition"](https://lucian.uchicago.edu/blogs/literarynetworks/files/2015/12/LONG_SO_CI.pdf), a paper that uses ML methods to find statistical patterns in the English haiku (start at pg. 17).
