@@ -26,6 +26,8 @@ Corpus was the text of _Northanger Abbey_. For each _n_, the first sentence is g
 ### Observations
 As _n_ increases, the sentences go from barely coherent to more grammatical and meaningful. This is expected, as widening the "horizon" of the model captures more of the grammatical structure of the language. 
 
+Something also to note is that there are opening/closing quotes without corresponding closing/opening quotes. This makes sense given that I have not tried to __distinguish dialog from narration or impose any rule for well-formed quotations__. A more sophisticated approach would be to have separate generative models for dialog vs. narration. The ratio of dialog to narration would also need to be estimated, and templates for dialog (e.g. "<dialog>, <character> said") could be imposed.
+
 ## Including multiple novels in the corpus
 These sentences were generated from corpus consisting of _Northanger Abbey_, _Sense and Sensibility_, and _Pride and Prejudice_, which are Austen's earliest written published novels.
 
@@ -42,8 +44,38 @@ These sentences were generated from corpus consisting of _Northanger Abbey_, _Se
 ### Observations
 There were some sentences in which characters from different novels appeared to be interacting with one another. However, it was more likely for characters from the same novel to be mentioned in a single sentence, probably because such characters were mentioned together in the original text. 
 
-Also, sentences that appeared to draw more from _Pride and Prejudice_ dominated in frequency. This can partly be understood by the fact that _Pride and Prejudice_, at 120,697 words is the longest of the three novels. But while it is much longer than _Northanger Abbey_ (77, 815 words), it is not much longer than _Sense and Sensibility_ (119,394 words). (Word counts were taken from the following source: https://www.janetogeorgette.com/word-counts-for-your-favourite-regency-romance-novels/)
+Also, __sentences that appeared to draw more from _Pride and Prejudice_ (i.e. mention characters from that novel) dominated in frequency__. This can partly be understood by the fact that _Pride and Prejudice_, at 120,697 words is the longest of the three novels. But while it is much longer than _Northanger Abbey_ (77, 815 words), it is not much longer than _Sense and Sensibility_ (119,394 words). (Word counts were taken from the following source: https://www.janetogeorgette.com/word-counts-for-your-favourite-regency-romance-novels/)
 
-There are two explanations that come to mind. One is that _Pride and Prejudice_ has a more complex network of characters, and/or that it simply mentions the names of characters more frequently than do the other two novels. The former seems true to me, as, for example, there are five Bennett sisters, as opposed to the two Dashwood sisters in _Sense_ and just Catherine in _Northanger_. 
+There are two explanations that come to mind. One is that _Pride and Prejudice_ has a more complex network of characters, and/or that it simply mentions the names of characters more frequently than do the other two novels. The former seems true to me, as, for example, there are five Bennett sisters, as opposed to the two Dashwood sisters in _Sense_ and just Catherine in _Northanger_. This might be worth looking into.
 
 ## Using part-of-speech tagging to generate more grammatical sentences
+
+The Markovify README gives examples of using part-of-speech taggers from NLTK and Spacy. These were fairly easy to deploy, though the Spacy tagger ironically led to the creation of sentences with erratic spacing. Thus, only sentences generated using NLTK tagging are presented below.
+
+### n = 2
+* Mr. Bennet say voluntarily to subjects which her sister by her cousin by the fire place, and his taste delicate and pure.
+* Belle went with her; and when at Barton.
+* Catherine was left to the ground; and Margaret, by being told that she might have seen how well she might, for the entail, I should be the meaning of this?
+* “I know little of the chest in undisputed possession!
+* Jane shook her head from every wish of exploring them after dinner, and then I found there would be soon increased by noise.
+
+### n = 3
+
+* Elizabeth had frequently united with Jane in the scheme, and as, with such a companion at Brighton, where the temptations must be greater than at home.
+* But on Wednesday, I think, Henry, you may expect us; and we shall very soon settle it with her, I am not so selfish, however, as to press for it, if inconvenient.
+* Don't fancy that you will not tell me.”
+* She and your brother choose to go, and you will feel the effects of your loveliness and amiable qualifications.
+* Her wretchedness I could have an opportunity of exhibiting was delightful to be really in an abbey.
+
+### Observations
+
+It is hard to say if these sentences are more grammatical than the sentences generated with the generic model. In fact, they seem to make less sense than the generically generated sentences, and they also feel less recognizably Austenian. I would guess that this is because the structures of the original sentences have been broken apart by whatever template the part-of-speech processor is using to construct "more grammatical" sentences.
+
+__In terms of computational creativity, the loss of original structure may be a good thing, as it seems more conducive to the creation of new meaning than does the purely statistical approach.__
+
+## Summary
+
+* Varying _n_ had the expected results.
+* To generate more "realistic" text, dialog should be distinguished from narration.
+* The dominance of _Pride and Prejudice_ characters in the generated sentences may reflect the larger number of characters in the novel compared to the other two.
+* Imposing part-of-speech tagging and templates (which are pretty coarse, since I used them out of the box) gives mixed results in terms of generating grammatical sentences.  But, using the template structure in place of the original sentence structure seems to have a greater potential to create new meaning than otherwise.

@@ -51,9 +51,9 @@ combined_text = " ".join([northanger_text, pride_text, sense_text])
     
 processed_text = process(combined_text)
 # Build the model.
-text_model = markovify.Text(processed_text, state_size=3)
+# text_model = markovify.Text(processed_text, state_size=3)
 # text_model = SpacyPOSifiedText(processed_text)
-# text_model = NLTKPOSifiedText(processed_text)
+text_model = NLTKPOSifiedText(processed_text, state_size=3)
 
 # novel = markov_novel.Novel(text_model, chapter_count=5)
 # novel.write(novel_title='my-novel', filetype='md')
