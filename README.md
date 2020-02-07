@@ -47,6 +47,7 @@ This section is heavily under development as I do more research on related work 
 
 ## Potential future objectives
 
+- Continue with the Markov approach and introduce structure to the generated text using k-clustering (to infer topics in the text) and a Hidden Markov Model, where the topics are states.
 - Try other models that may arrive at grammatical correctness or other desirable features through other means.
 - As a step towards irony detection, use pre-existing methods to evaluate the valence (positivity/negativity) of passages in Jane Austen.
 
