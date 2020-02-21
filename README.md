@@ -39,6 +39,7 @@ This section is heavily under development as I do more research on related work 
 
 ### Current objectives
 
+- Look into the Shakespeare sonnets assignment from CS 155, which uses HMMs to generate sonnets.
 - Read about RNNs and try to use them as a generative model for this project.
   - Text generation with an RNN using TensorFlow: https://www.tensorflow.org/tutorials/text/text_generation
 - Do more research to get a better sense of future objectives.
