@@ -20,7 +20,7 @@ This section is heavily under development as I do more research on related work 
 
 ### Weekly Update (2/8-2/21)
 - Progress was slow these past two weeks due to some health issues.
-- Worked on trying to use an HMM as a generative model to see if it would do any better than a Markov chain. My hypothesis, based on a project I did back in high school at Microsoft Research, was that it might impose more structure on the generated text. The initial results have been poor.
+- Worked on trying to use an HMM as a generative model to see if it would do any better than a Markov chain. My hypothesis, based on a project I did back in high school at Microsoft Research, was that it might impose more structure on the generated text. The initial results have been poor. See [HMM_Experiments1.md](https://github.com/cosmicomic/computing-austen/blob/master/HMM_Experiments1.md) for a write-up.
   - Using [pre-existing code](https://github.com/mfilej/nlg-with-hmmlearn) generated gibberish worse than the unigram Markov chain. I decided to write my own code from scratch (relatively).
   - Revisited an old write-up of the project I did in high school. It turned out that the approach I had used back then was not suited to the present task because the language that Austen uses is obviously much richer and more variable than that of an AI that answers questions about bus schedules, or [reports about earthquakes](https://www.aclweb.org/anthology/N04-1015/). Indeed, the first step to setting up the model, which is to infer topics by k-clustering observations/utterances, was unsuccessful (the clusters were poor).
 - A few options at this point:
