@@ -18,6 +18,15 @@ A CS 81 project that applies techniques in natural language generation and senti
 
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
 
+### Weekly Update (2/8-2/21)
+- Progress was slow these past two weeks due to some health issues.
+- Worked on trying to use an HMM as a generative model to see if it would do any better than a Markov chain. My hypothesis, based on a project I did back in high school at Microsoft Research, was that it might impose more structure on the generated text. The initial results have been poor.
+  - Using [pre-existing code](https://github.com/mfilej/nlg-with-hmmlearn) generated gibberish worse than the unigram Markov chain. I decided to write my own code from scratch (relatively).
+  - Revisited an old write-up of the project I did in high school. It turned out that the approach I had used back then was not suited to the present task because the language that Austen uses is obviously much richer and more variable than that of an AI that answers questions about bus schedules, or [reports about earthquakes](https://www.aclweb.org/anthology/N04-1015/). Indeed, the first step to setting up the model, which is to infer topics by k-clustering observations/utterances, was unsuccessful (the clusters were poor).
+- A few options at this point:
+  - Use a different approach using HMMs that would be more suited to the task. Some Googling has shown that there was a CS 155 assignment where HMMs were used to generate Shakespeare sonnets. 
+  - Abandon HMMs and try to use RNNs, which have also been used to generate Shakespeare sonnets.
+  
 ### Weekly Update (1/31-2/7)
 
 - Used [Markovify](https://github.com/jsvine/markovify/), a Markov chain generator package, to do some basic experiments on the first three Jane Austen novels. See [Markovify_Experiments.md](https://github.com/cosmicomic/computing-austen/blob/master/Markovify_Experiments.md) for a write-up.
@@ -30,14 +39,8 @@ This section is heavily under development as I do more research on related work 
 
 ### Current objectives
 
-- Program a simple *n*-gram Markov model (try varying *n*) to produce statistically probable sentences based on the Jane Austen corpus.
-  - Texts of the novel are happily available on Project Gutenberg.
-    - [Northanger Abbey](http://www.gutenberg.org/files/121/121-0.txt)
-    - [Sense and Sensibility](http://www.gutenberg.org/cache/epub/161/pg161.txt)
-    - [Pride and Prejudice](http://www.gutenberg.org/files/1342/1342-0.txt)
-    - [Mansfield Park](http://www.gutenberg.org/files/141/141-0.txt)
-    - [Emma](http://www.gutenberg.org/files/158/158-0.txt)
-    - [Persuasion](http://www.gutenberg.org/cache/epub/105/pg105.txt)
+- Read about RNNs and try to use them as a generative model for this project.
+  - Text generation with an RNN using TensorFlow: https://www.tensorflow.org/tutorials/text/text_generation
 - Do more research to get a better sense of future objectives.
   - Read a few articles in the digital humanities.
   - Still have not found work that specifically seeks to emulate the prose writing of a particular author, though I have found a plethora of work on style-constrained poetry generation.
@@ -48,13 +51,21 @@ This section is heavily under development as I do more research on related work 
 ## Potential future objectives
 
 - Continue with the Markov approach and introduce structure to the generated text using k-clustering (to infer topics in the text) and a Hidden Markov Model, where the topics are states.
-- Text generation with an RNN: https://www.tensorflow.org/tutorials/text/text_generation
 - Try other models that may arrive at grammatical correctness or other desirable features through other means.
 - As a step towards irony detection, use pre-existing methods to evaluate the valence (positivity/negativity) of passages in Jane Austen.
 
-## Related Work
+## Related Work/Resources
 
 [Zotero](https://www.zotero.org/cosmicomic/items/)
+
+### Corpus
+Texts of the novel are happily available on Project Gutenberg.
+- [Northanger Abbey](http://www.gutenberg.org/files/121/121-0.txt)
+- [Sense and Sensibility](http://www.gutenberg.org/cache/epub/161/pg161.txt)
+- [Pride and Prejudice](http://www.gutenberg.org/files/1342/1342-0.txt)
+- [Mansfield Park](http://www.gutenberg.org/files/141/141-0.txt)
+- [Emma](http://www.gutenberg.org/files/158/158-0.txt)
+- [Persuasion](http://www.gutenberg.org/cache/epub/105/pg105.txt)
 
 ### Digital Humanities
 - An [overview](http://www.digitalhumanities.org/dhq/vol/11/2/000317/000317.html) of "distant reading".
