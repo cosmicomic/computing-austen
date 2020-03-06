@@ -18,6 +18,9 @@ A CS 81 project that applies techniques in natural language generation and senti
 
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
 
+### Update (3/6)
+- I rethought my approach last week and tried again in a smarter (I think) way. The idea is still to use the HMM/clustering to infer topics, but to have a different Markov chain for each topic to generate sentences based on a probabilistically generated sequence of topics. Write-up here: https://github.com/cosmicomic/computing-austen/blob/master/Clustering.md
+
 ### Weekly Update (2/8-2/21)
 - Progress was slow these past two weeks due to some health issues.
 - Worked on trying to use an HMM as a generative model to see if it would do any better than a Markov chain. My hypothesis, based on a project I did back in high school at Microsoft Research, was that it might impose more structure on the generated text. The initial results have been poor. See [HMM_Experiments1.md](https://github.com/cosmicomic/computing-austen/blob/master/HMM_Experiments1.md) for a write-up.
