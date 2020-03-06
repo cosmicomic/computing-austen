@@ -20,6 +20,7 @@ This section is heavily under development as I do more research on related work 
 
 ### Update (3/6)
 - I rethought my approach last week and tried again in a smarter (I think) way. The idea is still to use the HMM/clustering to infer topics, but to have a different Markov chain for each topic to generate sentences based on a probabilistically generated sequence of topics. Write-up here: https://github.com/cosmicomic/computing-austen/blob/master/Clustering.md
+  - I didn't actually finish the HMM since the clustering yielded interesting results on its own. Completing the HMM modeling could be a good way to spend the next week to see if it generates even more natural sounding paragraphs, though there may be some computational difficulties (the probabilities involved would be vanishingly small, I think). Another route might be to focus on dialogue and try to simulate Austenian conversations. The simulated conversations could then be integrated into some generated narration. This would address the current issue of the generated language indiscriminately mixing the narrator's voice with the characters' speech.
 
 ### Weekly Update (2/8-2/21)
 - Progress was slow these past two weeks due to some health issues.
