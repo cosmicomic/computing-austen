@@ -1,4 +1,4 @@
-# Imitating Sentence Flow with Clustering
+# Imitating Paragraph Flow with Clustering
 
 ## Background
 
