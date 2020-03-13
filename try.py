@@ -62,7 +62,7 @@ text_model = markovify.Text(processed_text, state_size=2)
 # novel.write(novel_title='my-novel', filetype='md')
 sentence_sequence = []
 # Print five randomly-generated sentences
-for i in range(8):
+for i in range(6):
     sentence_sequence.append(text_model.make_short_sentence(280))
 
 print(" ".join(sentence_sequence))
