@@ -105,7 +105,7 @@ def prepare_samples(new_text):
 # - ngrams (the set of unique ngrams, which will be used as features in the vectors)
 # - samples (a list of lists of words, which make up sentences)
 # - title_string (the name the model will be saved under as a file)
-def cluster(k, ngrams, samples, title_string):
+def cluster(k, ngrams, samples, title_string, save=True):
     # represent as sparse vectors
     n_features = len(ngrams)
     n_samples = len(samples)
@@ -117,13 +117,14 @@ def cluster(k, ngrams, samples, title_string):
     print("Filling out matrix")
     for i in range(n_samples):
         for j in range(n_features):
-            if unigrams[j] in samples[i]:
+            if ngrams[j] in samples[i]:
                 X[i, j] = 1
 
     print("Clustering")
     # cluster
     kmeans = KMeans(n_clusters=k).fit(X)
-    dump(kmeans, 'kmeans_' + title_string + '.joblib') 
+    if save:
+        dump(kmeans, 'kmeans_' + title_string + '.joblib') 
     print(kmeans.labels_)
 
     labels = kmeans.labels_
@@ -175,17 +176,31 @@ def get_bags_of_words(cluster_dict):
         bag_dict[cluster_index] = bag_of_words
     return bag_dict
 
+# Run k-means clustering on sentences in text as a single string.
+def cluster_text_from_string(k, text_string):
+    sentences, samples = prepare_samples(text_string)
+    unigrams = get_unigrams(text_string)
 
-# Prepare the text and run k-means clustering on the sentences.
-def cluster_text(k, title_string, load=False)
+    kmeans = cluster(k, unigrams, samples, "", False)
+    labels = kmeans.labels_
+
+    # Display the sizes of the clusters.
+    unique, counts = np.unique(labels, return_counts=True)
+    cluster_sizes = dict(zip(unique, counts))
+    print(cluster_sizes)
+
+    return samples, sentences, labels, cluster_sizes
+
+# Prepare the text from a text file and run k-means clustering on the sentences.
+def cluster_text_from_file(k, title_string, saved=False):
     new_text = prepare_text(title_string)
     sentences, samples = prepare_samples(new_text)
     unigrams = get_unigrams(new_text)
 
     kmeans = None
 
-    if not load:
-        kmeans = cluster(k, unigrams, samples, title_string)
+    if not saved:
+        kmeans = cluster(k, unigrams, samples, title_string, True)
     else:
         kmeans = load('kmeans_' + title_string + '.joblib')
     labels = kmeans.labels_
@@ -198,7 +213,7 @@ def cluster_text(k, title_string, load=False)
 
     return samples, sentences, labels, cluster_sizes
 
-def compute_transition_matrix(samples, labels):
+def compute_transition_matrix(k, samples, labels):
     # Count the number of transitions from state to state.
     transitions = np.zeros((k, k))
     for i in range(1, len(samples)):
@@ -217,8 +232,9 @@ def compute_transition_matrix(samples, labels):
     return transitions_list
 
 # Based on the transition matrix, generate a sequence of labels of length seq_length.
-def generate_state_sequence(seq_length, transitions_list):
-    gen_sequence = [0]
+def generate_state_sequence(k, seq_length, transitions_list):
+    start_state = random.randrange(0, k)
+    gen_sequence = [start_state]
     prev = gen_sequence[0]
     for i in range(1, seq_length):
         next = random.choices(list(range(k)), weights=transitions_list[prev])[0]
@@ -248,37 +264,59 @@ def generate_nice_paragraph(gen_sequence, markov_chains):
 
     for state in gen_sequence:
         state_model = markov_chains[state]
-        sentence_sequence.append(text_model.make_sentence())
+
+        # Bug here... it should've been state_model instead of text_model.
+        # This would seem to imply that all of the sentences had been
+        # generated just using a Markov chain trained on the last
+        # cluster... >.>
+        sentence_sequence.append(state_model.make_sentence())
 
     return sentence_sequence
+
+def compute_average_sentence_lengths(cluster_dict):
+    length_dict = {}
+    for key in cluster_dict.keys():
+        cluster = cluster_dict[key]
+        remove_punct = remove_punctuation(cluster)
+        samples = sentences_to_unigrams(remove_punct)
+        
+        average_length = sum([len(sentence_list) for sentence_list in samples]) / len(samples)
+        length_dict[key] = average_length
+
+    return length_dict
     
-print(" ".join(sentence_sequence))
+k = 5
+seq_length = 8
 
-narration = cluster_dict[0]
-narration_continuous = " ".join([sentence + "." for sentence in narration])
-
-sentences, samples = prepare_samples(narration_continuous)
-unigrams = get_unigrams(narration_continuous)
-# kmeans = cluster(4, unigrams, samples, "persuasion_narration")
-kmeans = load('kmeans_persuasion_narration.joblib')
-labels = kmeans.labels_
-print(kmeans.inertia_)
-unique, counts = np.unique(labels, return_counts=True)
-cluster_sizes = dict(zip(unique, counts))
-print(cluster_sizes)
-
-cluster_dict = sort_samples_by_cluster(labels, sentences)
+# Cluster
+samples, sentences, labels, cluster_sizes = cluster_text_from_file(k, "Persuasion", True)
 show_cluster_sentences(sentences, labels)
 
-# cluster_dict = sort_samples_by_cluster(labels, sentences)
+# Prepare transition matrix
+transitions_list = compute_transition_matrix(k, samples, labels)
 
-# for key in cluster_dict.keys():
-#     cluster_continuous = '. '.join(cluster_dict[key])
-#     text_model = markovify.Text(cluster_continuous, state_size=2)
+# Generate probable sequence and paragraph
+gen_sequence = generate_state_sequence(k, seq_length, transitions_list)
+markov_chains = generate_markov_chains(labels, sentences)
+print(gen_sequence)
+sentence_sequence = generate_nice_paragraph(gen_sequence, markov_chains)
+print(" ".join(sentence_sequence))
 
-#     print("CLUSTER", key)
-#     for i in range(5):
-#         print(text_model.make_sentence())
+# Use only the last Markov chain to generate sentences (to address the bug)
+print("\n")
+sentence_sequence2 = []
+for _ in range(seq_length):
+    sentence_sequence2.append(markov_chains[4].make_sentence())
+print(" ".join(sentence_sequence2))
+
+# Cluster sentences in only the last cluster, and see what subclusters arise
+cluster_dict = sort_samples_by_cluster(labels, sentences)
+print(compute_average_sentence_lengths(cluster_dict))
+last_cluster = cluster_dict[4]
+last_cluster_text = " ".join([sentence + "." for sentence in last_cluster])
+samples2, sentences2, labels2, cluster_sizes2 = cluster_text_from_string(4, last_cluster_text)
+show_cluster_sentences(sentences2, labels2)
+
 # bag_dict = get_bags_of_words(cluster_dict)
 
 # c = Counter(bag_dict[0])
