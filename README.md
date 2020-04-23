@@ -1,4 +1,4 @@
-﻿# computing-austen
+# computing-austen
 
 A CS 81 project that applies techniques in natural language generation and sentiment analysis to Jane Austen's six novels.
 
@@ -14,9 +14,21 @@ A CS 81 project that applies techniques in natural language generation and senti
   
 3. Learn more about what is studied in the digital humanities and seek other possible applications of NLP to Jane Austen studies.
 
-## Plan
+## Plan ##
 
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
+
+### Update (4/23) ###
+
+- Separated dialog from narration, and ran clustering on and generated paragraphs from each separately
+	- Results seem to be nicer than before, as first-person and third-person are no longer wildly mixed in the same paragraph
+	- Unsurprisingly, "narration paragraphs" are much longer than "dialog paragraphs". Surprisingly, the narration paragraphs are not that much less believable than the dialog paragraphs.
+	- With these results, it feels like I could generate a sort of "statistical approximation" of the novel, by calculating the ratio of narration to dialog, generating narrative and dialog sentences accordingly, and putting them all together. Not sure if this is worth doing.
+- I am more interested in simulating conversations. At this point it may be a good idea to start grouping dialog manually. 
+	- Although I could use regular expressions to separate dialog and narration, it was very coarse: basically every bit of text surrounded by quotation marks in the novel got mashed together (separated only by spaces and periods) into one huge dialog unit. Also, the separation was not perfect.
+	- I may just go through each conversation in the novel manually and create a corpus where pieces of dialog are grouped by whether or not they're in the same conversation.
+- Further down the line, it might be cool to see if I could use a pre-existing supervised learning algorithm (e.g. for sentiment analysis) to measure irony in Austen sentences. This would also require manually marking sentences, on a subjective irony scale.
+
 
 ### Update (3/6)
 - I rethought my approach last week and tried again in a smarter (I think) way. The idea is still to use the HMM/clustering to infer topics, but to have a different Markov chain for each topic to generate sentences based on a probabilistically generated sequence of topics. Write-up here: https://github.com/cosmicomic/computing-austen/blob/master/Clustering.md
