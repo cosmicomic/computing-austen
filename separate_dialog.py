@@ -5,7 +5,6 @@ k = 4
 seq_length = 5
 
 text = prepare_text("Persuasion")
-
 dialog_pattern = r'\"([^\"]+?)(\"|\-\-\n)'
 
 talk = re.findall(dialog_pattern, text)
@@ -18,14 +17,25 @@ dialog = ""
 for t in talk:
     dialog += t[0] + '\n'
 
+# with open("Corpus/PersuasionDialog.txt", "w", encoding="utf8") as f:
+#     f.write(dialog)
+
 narration = re.sub(dialog_pattern, '', text)
 
-text_string = dialog
-# print(text_string)
-# text_string = narration
+with open("Corpus/PersuasionNarration.txt", "w", encoding="utf8") as f:
+    f.write(narration)
 
-samples, sentences, labels, cluster_sizes = cluster_text_from_string(k, text_string)
-show_cluster_sentences(sentences, labels)
+text_string = narration
+# text_string = dialog
+
+### Make a fresh clustering
+# kmeans, samples, sentences, labels, cluster_sizes = cluster_text_from_string(k, text_string)
+# dump(kmeans, 'kmeans_' + 'PersuasionNarration' + '.joblib') 
+# dump(kmeans, 'kmeans_' + 'PersuasionDialog' + '.joblib') 
+
+### Load previous clustering
+samples, sentences, labels, cluster_sizes = cluster_text_from_file(k, 'PersuasionNarration', saved=True)
+show_cluster_sentences(sentences, labels, num_sample_sentences=5)
 
 transitions_list = compute_transition_matrix(k, samples, labels, cluster_sizes)
 

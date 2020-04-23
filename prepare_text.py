@@ -135,7 +135,7 @@ def cluster(k, ngrams, samples, title_string, save=True):
 
 # Given a list of sentences and the corresponding list of cluster labels,
 # print 5 random sentences from each cluster to the terminal.
-def show_cluster_sentences(sentences, labels):
+def show_cluster_sentences(sentences, labels, num_sample_sentences=5):
     cluster_dict = {}
     for i in range(len(sentences)):
         if labels[i] not in cluster_dict:
@@ -145,7 +145,7 @@ def show_cluster_sentences(sentences, labels):
 
     for key in cluster_dict.keys():
         print("Cluster", key)
-        draw_from_cluster(5, cluster_dict[key], sentences, True)
+        draw_from_cluster(num_sample_sentences, cluster_dict[key], sentences, True)
         print("\n")
 
 # Given a list of samples and the corresponding list of labels,
@@ -189,7 +189,7 @@ def cluster_text_from_string(k, text_string):
     cluster_sizes = dict(zip(unique, counts))
     print(cluster_sizes)
 
-    return samples, sentences, labels, cluster_sizes
+    return kmeans, samples, sentences, labels, cluster_sizes
 
 # Prepare the text from a text file and run k-means clustering on the sentences.
 def cluster_text_from_file(k, title_string, saved=False):
@@ -213,7 +213,7 @@ def cluster_text_from_file(k, title_string, saved=False):
 
     return samples, sentences, labels, cluster_sizes
 
-def compute_transition_matrix(k, samples, labels):
+def compute_transition_matrix(k, samples, labels, cluster_sizes):
     # Count the number of transitions from state to state.
     transitions = np.zeros((k, k))
     for i in range(1, len(samples)):
@@ -285,37 +285,39 @@ def compute_average_sentence_lengths(cluster_dict):
 
     return length_dict
     
-k = 5
-seq_length = 8
+# k = 5
+# seq_length = 8
 
-# Cluster
-samples, sentences, labels, cluster_sizes = cluster_text_from_file(k, "Persuasion", True)
-show_cluster_sentences(sentences, labels)
+# print("k =", 5)
 
-# Prepare transition matrix
-transitions_list = compute_transition_matrix(k, samples, labels)
+# # Cluster
+# samples, sentences, labels, cluster_sizes = cluster_text_from_file(k, "Persuasion", True)
+# show_cluster_sentences(sentences, labels)
 
-# Generate probable sequence and paragraph
-gen_sequence = generate_state_sequence(k, seq_length, transitions_list)
-markov_chains = generate_markov_chains(labels, sentences)
-print(gen_sequence)
-sentence_sequence = generate_nice_paragraph(gen_sequence, markov_chains)
-print(" ".join(sentence_sequence))
+# # Prepare transition matrix
+# transitions_list = compute_transition_matrix(k, samples, labels, cluster_sizes)
 
-# Use only the last Markov chain to generate sentences (to address the bug)
-print("\n")
-sentence_sequence2 = []
-for _ in range(seq_length):
-    sentence_sequence2.append(markov_chains[4].make_sentence())
-print(" ".join(sentence_sequence2))
+# # Generate probable sequence and paragraph
+# gen_sequence = generate_state_sequence(k, seq_length, transitions_list)
+# markov_chains = generate_markov_chains(labels, sentences)
+# print(gen_sequence)
+# sentence_sequence = generate_nice_paragraph(gen_sequence, markov_chains)
+# print(" ".join(sentence_sequence))
 
-# Cluster sentences in only the last cluster, and see what subclusters arise
-cluster_dict = sort_samples_by_cluster(labels, sentences)
-print(compute_average_sentence_lengths(cluster_dict))
-last_cluster = cluster_dict[4]
-last_cluster_text = " ".join([sentence + "." for sentence in last_cluster])
-samples2, sentences2, labels2, cluster_sizes2 = cluster_text_from_string(4, last_cluster_text)
-show_cluster_sentences(sentences2, labels2)
+# # Use only the last Markov chain to generate sentences (to address the bug)
+# print("\n")
+# sentence_sequence2 = []
+# for _ in range(seq_length):
+#     sentence_sequence2.append(markov_chains[4].make_sentence())
+# print(" ".join(sentence_sequence2))
+
+# # Cluster sentences in only the last cluster, and see what subclusters arise
+# cluster_dict = sort_samples_by_cluster(labels, sentences)
+# print(compute_average_sentence_lengths(cluster_dict))
+# last_cluster = cluster_dict[4]
+# last_cluster_text = " ".join([sentence + "." for sentence in last_cluster])
+# samples2, sentences2, labels2, cluster_sizes2 = cluster_text_from_string(4, last_cluster_text)
+# show_cluster_sentences(sentences2, labels2)
 
 # bag_dict = get_bags_of_words(cluster_dict)
 
