@@ -18,6 +18,12 @@ A CS 81 project that applies techniques in natural language generation and senti
 
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
 
+### Update (4/29) ###
+
+- Found marked-up XML files of the novels from a source I had actually found at the start of this project, "Austen Said". The XML files can be found [here](http://austen.unl.edu/about#download).
+	- They are in a very particular format, as specified by the [TEI](https://tei-c.org/Guidelines/P5/), which is an organization that maintains guidelines for encoding digital humanities texts.
+	- Mostly spent this week figuring out how to parse this text and extract what I need. These efforts will continue into the next week.
+
 ### Update (4/23) ###
 
 - Separated dialog from narration, and ran clustering on and generated paragraphs from each separately
