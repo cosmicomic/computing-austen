@@ -18,6 +18,31 @@ A CS 81 project that applies techniques in natural language generation and senti
 
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
 
+### Update (5/13) ###
+This week, I basically figured out how to parse the XML files, at least for *Northanger Abbey*, allowing me to create an ersatz chapter, which you can read [here](https://github.com/cosmicomic/computing-austen/blob/master/The%20walls%20were%20papered.pdf).
+
+#### Highlights ####
+My algorithm seemed to have generated some pretty existential prose, which reminded me of Virginia Woolf's *To the Lighthouse* (which is one of my favorite novels) and other modernist works.
+
+- "The anxieties of common life began soon to succeed to the window, fidgeted about, hummed a tune, and seemed wholly self-occupied."
+- Catherine, recollecting herself, grew ashamed of having explained them. 
+ “Yes, but you forget that your mother died.”
+- "They were viewing the country with the common feelings of common life, than with the same hand, marked an expenditure scarcely more interesting, in letters, hair-powder, shoe-string, and breeches-ball."
+
+#### Process ####
+
+The process for doing this was somewhat complicated and grungy. Here is an explanation: 
+
+- I was able to separate dialog from narration pretty cleanly, which allowed me to create a 2-state Markov chain to model transitions between dialog and narration. 
+- Using code I wrote earlier in the project, I ran clustering on dialog and narration separately, obtaining Markov chains corresponding to dialog clusters and narration clusters. 
+	- I also computed state transition probability matrices for dialog and narration. 
+- Then, I generated a probable sequence of narration and dialog based on the higher-order 2-state Markov chain. I set the length of the sequence to be 100 sentences, to approximate a chapter. 
+	- For each continuous block of *n* sentences of narration or dialog, I pretended I was generating a paragraph of length *n* of narration or dialog, respectively. I used my earlier process of generating a probable state sequence of length *n* based on a state transition probability matrix. Then, for each state, I had the corresponding Markov chain generate a sentence.
+	- In order to make the dialog look more like dialog, I surrounded each dialog sentence with quotation marks and put it on a new line.
+- Finally, I took the entire generated text, pasted it into a Word document, and manually formatted it by indenting each line of dialog and the beginning of each paragraph.
+
+For completeness, I want to generate fake chapters for Austen's other five novels. After that, I could try to write a more refined procedure for generating conversations specifically.
+
 ### Update (4/29) ###
 
 - Found marked-up XML files of the novels from a source I had actually found at the start of this project, "Austen Said". The XML files can be found [here](http://austen.unl.edu/about#download).
