@@ -240,8 +240,11 @@ def compute_transition_matrix(k, samples, labels, cluster_sizes):
     return transitions_list
 
 # Based on the transition matrix, generate a sequence of labels of length seq_length.
-def generate_state_sequence(k, seq_length, transitions_list):
-    start_state = random.randrange(0, k)
+def generate_state_sequence(k, seq_length, transitions_list, start=-1):
+    if start < 0:
+        start_state = random.randrange(0, k)
+    else:
+        start_state = start
     gen_sequence = [start_state]
     prev = gen_sequence[0]
     for i in range(1, seq_length):

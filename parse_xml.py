@@ -89,20 +89,65 @@ for chap in body[1:]:
                             all_narration.append(clean) 
                             sequence.append(0)
 
-print(len(all_dialog))
 dialog_string = " ".join(all_dialog)
-print(len(all_narration))
 narration_string = " ".join(all_narration)
 
 seq_dict = {0 : sequence.count(0), 1 : sequence.count(1)}
 
-transition_matrix = compute_transition_matrix(2, sequence, sequence, seq_dict)
-print(transition_matrix)
+dn_transitions = compute_transition_matrix(2, sequence, sequence, seq_dict)
+# print(transition_matrix)
+
+generated_sequence = generate_state_sequence(2, 100, dn_transitions, start=0)
+print(generated_sequence)
 
 # kmeans, samples, sentences, labels, cluster_sizes = cluster_text_from_string(k, clean_titles(dialog_string))
+# dump([sentences, labels, cluster_sizes], "NA_dialog_output")
+
 # print("Dialog Clusters")
+[sentences, labels, cluster_sizes] = load("NA_dialog_output")
+dialog_chains = generate_markov_chains(labels, sentences)
+dialog_transitions = compute_transition_matrix(k, labels, labels, cluster_sizes)
+
 # show_cluster_sentences(sentences, labels, num_sample_sentences=8)
+# sequence = generate_state_sequence(k, seq_length, dialog_transitions)
+# print(generate_nice_paragraph(sequence, dialog_chains))
 
 # print("Narration Clusters")
 # kmeans, samples, sentences, labels, cluster_sizes = cluster_text_from_string(k, clean_titles(narration_string))
+# dump([sentences, labels, cluster_sizes], "NA_narration_output")
+[sentences, labels, cluster_sizes] = load("NA_narration_output")
+narration_chains = generate_markov_chains(labels, sentences)
+narration_transitions = compute_transition_matrix(k, labels, labels, cluster_sizes)
+
+# sequence = generate_state_sequence(k, seq_length, narration_transitions)
+# print(generate_nice_paragraph(sequence, narration_chains))
 # show_cluster_sentences(sentences, labels, num_sample_sentences=8)
+
+chapter_text = []
+i = 1
+curr_state = generated_sequence[0]
+curr_length = 1
+while i < len(generated_sequence):
+    if generated_sequence[i] == curr_state:
+        curr_length += 1
+    else:
+        # generate sentence sequence
+        if curr_state == 1:
+            subsequence = generate_state_sequence(k, curr_length, dialog_transitions)
+            addition = generate_nice_paragraph(subsequence, dialog_chains)
+            addition = ["“" + x + "”\n" for x in addition]
+            addition = ["\n"] + addition
+        else:
+            subsequence = generate_state_sequence(k, curr_length, narration_transitions)
+            addition = generate_nice_paragraph(subsequence, narration_chains)
+        chapter_text += addition
+        curr_length = 0
+        curr_state = generated_sequence[i]
+
+    i += 1
+
+chapter_text_string = " ".join(chapter_text)
+f = open("ersatz.txt", "a")
+f.write(chapter_text_string)
+f.close()
+
