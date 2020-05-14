@@ -43,6 +43,8 @@ The process for doing this was somewhat complicated and grungy. Here is an expla
 
 For completeness, I want to generate fake chapters for Austen's other five novels. After that, I could try to write a more refined procedure for generating conversations specifically.
 
+I could also spend some time on scientific stuff, like learning more about clustering metrics. I could also try to generate word clouds for each cluster; this would require removing "stop words" (words like "the", "of", and "and") so that I actually get meaningful representatives for the clusters.
+
 ### Update (4/29) ###
 
 - Found marked-up XML files of the novels from a source I had actually found at the start of this project, "Austen Said". The XML files can be found [here](http://austen.unl.edu/about#download).
