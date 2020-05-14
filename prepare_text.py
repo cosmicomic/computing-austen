@@ -25,6 +25,14 @@ def draw_from_cluster(n, cluster, samples, sentences=False):
             printed_sentence = samples[sentence_index].replace("\n", " ")
             print(printed_sentence)
 
+def clean_titles(text_string):
+    new_text = text_string.replace("Mrs.", "Mrs")
+    new_text = new_text.replace("Mr.", "Mr")
+    new_text = new_text.replace("Dr.", "Dr")
+
+    return new_text
+
+
 # Given the name of the book (which must be a file in the directory),
 # performs pre-processing for clustering, which includes removing
 # chapter headings, and removing periods from the ends of titles, such
