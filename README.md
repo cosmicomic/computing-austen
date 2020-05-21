@@ -19,8 +19,9 @@ A CS 81 project that applies techniques in natural language generation and senti
 This section is heavily under development as I do more research on related work and get a better sense of what can be achieved in a project in this domain.
 
 ### Update (5/20) ###
+Uneventful week--
 - Found TEI-compliant XML files for Joyce, Woolf, Dostoevsky, George Eliot, and Poe. Unfortunately, there is still quite a bit of variation in formatting. I will have to adjust my code to account for this variation.
-- Code worked perfectly on the other Austen files I tried (*Emma* and *Mansfield Park*). I don't find the results particularly interesting.
+- Code worked perfectly on the other Austen files I tried (*Emma* and *Mansfield Park*). Chapters are [here](https://github.com/cosmicomic/computing-austen/blob/master/Emma_fake.pdf) and [here](https://github.com/cosmicomic/computing-austen/blob/master/Mansfield_fake.pdf). I don't find the results particularly interesting.
 - Used the word_cloud package to generate word clouds for different clusters in the texts. The results, again, weren't terribly interesting or meaningful. Would be curious about looking into clustering metrics and seeing how good the clusters actually are.
 
 ### Update (5/13) ###
